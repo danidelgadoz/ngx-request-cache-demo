@@ -1,4 +1,8 @@
-:host {
-  padding: 32px 48px;
+:host > div {
+  padding: 32px 40px;
   display: block;
+
+  > div {
+    margin-bottom: 16px;
+  }
 }

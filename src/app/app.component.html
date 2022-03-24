@@ -1,1 +1,12 @@
-<app-movie-list></app-movie-list>
+<mat-toolbar color="primary">
+  <span>ngx-request-cache@1.0.0</span>
+</mat-toolbar>
+
+<div>
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <mat-slide-toggle [checked]="isCacheEnable" (change)="onToggleChange($event)">Enable cache</mat-slide-toggle>
+    <button mat-button mat-raised-button color="primary">Clear cache</button>
+  </div>
+
+  <app-movie-list></app-movie-list>
+</div>
