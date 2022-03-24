@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { RequestCacheHeader } from 'ngx-request-cache';
 
 import { Movie } from './movie.model';
 
@@ -15,8 +16,16 @@ export interface Paginator<T> {
 const movieDBHost = 'https://api.themoviedb.org/3';
 @Injectable()
 export class MovieService {
+  private _isCacheEnabled = true;
 
   constructor(private http: HttpClient) { }
+
+  public get isCacheEnabled() {
+    return this._isCacheEnabled;
+  }
+  public set isCacheEnabled(value) {
+    this._isCacheEnabled = value;
+  }
 
   list(pageIndex: number): Observable<Paginator<Movie>> {
     let params = new HttpParams();
@@ -24,7 +33,12 @@ export class MovieService {
     params = params.append('language', 'en-US');
     params = params.append('page', String(pageIndex + 1));
 
-    return this.http.get<Paginator<Movie>>(`${movieDBHost}/movie/now_playing`, { params })
+    let headers = new HttpHeaders();
+    if (this._isCacheEnabled) {
+      headers = headers.append(RequestCacheHeader.Cachable, '');
+    }
+
+    return this.http.get<Paginator<Movie>>(`${movieDBHost}/movie/now_playing`, { params, headers })
       .pipe(
         map(response => {
           response.page = response.page - 1;

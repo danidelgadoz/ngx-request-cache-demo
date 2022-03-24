@@ -4,8 +4,22 @@
 
 <div>
   <div fxLayout="row" fxLayoutAlign="space-between">
-    <mat-slide-toggle [checked]="isCacheEnable" (change)="onToggleChange($event)">Enable cache</mat-slide-toggle>
-    <button mat-button mat-raised-button color="primary">Clear cache</button>
+    <mat-slide-toggle
+      [checked]="movieService.isCacheEnabled"
+      (change)="onToggleChange($event)"
+    >
+      Enable cache
+    </mat-slide-toggle>
+
+    <button
+      *ngIf="movieService.isCacheEnabled"
+      mat-button
+      mat-raised-button color="primary"
+      (click)="onClearCache()"
+    >
+      Clear cache
+    </button>
+
   </div>
 
   <app-movie-list></app-movie-list>
