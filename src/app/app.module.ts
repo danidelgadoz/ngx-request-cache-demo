@@ -4,10 +4,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MovieModule } from './movie/movie.module';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { RequestCacheInterceptor, RequestCacheService } from 'ngx-request-cache';
+import { NgxRequestCacheModule } from 'ngx-request-cache';
 
 
 @NgModule({
@@ -21,10 +21,7 @@ import { RequestCacheInterceptor, RequestCacheService } from 'ngx-request-cache'
     FlexLayoutModule,
     MovieModule,
     MaterialModule,
-  ],
-  providers: [
-    RequestCacheService,
-    { provide: HTTP_INTERCEPTORS, useClass: RequestCacheInterceptor, multi: true },
+    NgxRequestCacheModule
   ],
   bootstrap: [AppComponent]
 })
